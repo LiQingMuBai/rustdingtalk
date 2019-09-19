@@ -14,6 +14,7 @@ use structopt::StructOpt;
 #[derive(StructOpt)]
 struct Cli {
     _min: f32,
+    _symbol: String,
 }
 
 use reqwest::header::CONTENT_TYPE;
@@ -70,8 +71,8 @@ fn send_ding_talk(_price: f32) {
         at: new_at,
     };
     let _value = reqwest::Client::new()
-        .post(url)
-        .header(CONTENT_TYPE, "application/json'")
+        .post("url address")
+        .header(CONTENT_TYPE, "application/json")
         .json(&new_post)
         .send()
         .expect("Sorry,The Chinese government had banned the website.");
@@ -82,10 +83,12 @@ fn main() {
     let mut sched = JobScheduler::new();
     sched.add(Job::new("1/30 * * * * *".parse().unwrap(), || {
         println!("I get executed every 30 seconds!");
-        let response = reqwest::get("https://www.okex.com/api/index/v3/EOS-USDT/constituents")
-            .unwrap()
-            .text()
-            .unwrap();
+        let mut _url = String::new();
+        _url.push_str("https://www.okex.com/api/index/v3/");
+        _url.push_str(&_args._symbol);
+        _url.push_str("/constituents");
+
+        let response = reqwest::get(&_url).unwrap().text().unwrap();
         let infomation: Infomation = serde_json::from_str(&response).unwrap();
         println!("Response is {:?}", infomation);
         let _value = infomation.data.constituents.last().unwrap();

@@ -24,14 +24,10 @@ The documentation, for now, is the help return of tool:
 ```sh
 
 USAGE:
-    rustdingtalk [amount]
+    rustdingtalk -- [_min]  [_symbol]
 
-FLAGS:
-    -h, --help       Prints help information
-    -s, --silent     Silent information abount currency result
-    -V, --version    Prints version information
-    -v, --verbose    Verbose errors
 
 ARGS:
-    <amount>    Set amount to compare target [default: 1]
+    <_min>    	 Set _min to compare target 
+    <_symbol>    Set _symbol to query symbol index through OKEX
 ```
