@@ -1,14 +1,14 @@
 [package]
 name = "rustdingtalk"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["chenyang <cywhoyi@gmail.com>"]
-edition = "2018"
+edition = "2019"
 license = "MIT OR Apache-2.0"
-description = "A tool to search files"
+description = "every 30 seconds,alert by dingding talk"
 readme = "README.md"
-homepage = "https://github.com/you/rustdingtalk"
-repository = "https://github.com/you/rustdingtalk"
-keywords = ["cli", "search", "demo"]
+homepage = "https://github.com/LiQingMuBai/rustdingtalk"
+repository = "https://github.com/LiQingMuBai/rustdingtalk"
+keywords = ["cli", "dingding", "demo"]
 categories = ["command-line-utilities"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
