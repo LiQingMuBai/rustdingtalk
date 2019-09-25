@@ -11,7 +11,7 @@ $ cargo build --release --verbose
 ```
 To run as debug, just run this example:
 ```sh
-$ cargo run -- 4.03
+$ cargo run -- 4.03 EOS-USDT
 ```
 ### Installation
 Install simple typing:
