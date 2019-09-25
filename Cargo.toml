@@ -2,7 +2,7 @@
 name = "rustdingtalk"
 version = "0.1.1"
 authors = ["chenyang <cywhoyi@gmail.com>"]
-edition = "2019"
+edition = "2018"
 license = "MIT OR Apache-2.0"
 description = "every 30 seconds,alert by dingding talk"
 readme = "README.md"
