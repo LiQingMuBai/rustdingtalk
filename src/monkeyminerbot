@@ -1,30 +1,38 @@
+extern crate job_scheduler;
+
+use job_scheduler::{JobScheduler, Job};
+use std::time::Duration;
 use async_std::task;
 use std::process::Command;
 
-// The need for Ok with turbofish is explained here
-// https://rust-lang.github.io/async-book/07_workarounds/03_err_in_async_blocks.html
 fn main() -> Result<(), http_types::Error> {
-    let output = Command::new("/bin/bash")
-        .arg("/Users/sherlock/worker1.sh")
-        .output()
-        .expect("failed to execute process");
-    let result = String::from_utf8_lossy(&output.stdout).to_string();
-    println!("status: {}", output.status);
-    println!("========================================================");
+    let mut sched = JobScheduler::new();
 
-    if result.contains("ERROR") {
+    sched.add(Job::new("1/20 * * * * *".parse().unwrap(), || {
+        println!("I get executed every 20 seconds!");
+        // let slice = "hello world";
+        // let index = slice.find("world").unwrap();
+
+        let output = Command::new("/bin/bash")
+            .arg("/Users/sherlock/worker1.sh")
+            .output()
+            .expect("failed to execute process");
+        let result = String::from_utf8_lossy(&output.stdout).to_string();
+        println!("status: {}", output.status);
+        println!("========================================================");
         println!("stdout: {}", result);
-    }else {
-
+        println!("========================================================");
+        task::block_on(async {
+            let uri = "";
+            let data = serde_json::json!({ "title": "蒙起D路飞","text":"D之一族 \n 罗 \n 艾斯 \n" });
+            let res = surf::post(uri).body_json(&data).unwrap().await?;
+            assert_eq!(res.status(), http_types::StatusCode::Ok);
+            Ok::<(), http_types::Error>(())
+        });
+    }));
+    loop {
+        sched.tick();
+        std::thread::sleep(Duration::from_millis(500));
     }
-    println!("========================================================");
-    println!("stderr: {}", String::from_utf8_lossy(&output.stderr));
-    femme::start(log::LevelFilter::Info).unwrap();
-    task::block_on(async {
-        let uri = "dingding notify url";
-        let data = serde_json::json!({ "title": "蒙起D路飞","text":"D之一族" });
-        let res = surf::post(uri).body_json(&data).unwrap().await?;
-        assert_eq!(res.status(), http_types::StatusCode::Ok);
-        Ok::<(), http_types::Error>(())
-    })
+    Ok::<(), http_types::Error>(())
 }
